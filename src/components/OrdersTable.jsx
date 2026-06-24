@@ -7,6 +7,8 @@ import {
   X,
 } from 'lucide-react'
 import { useState } from 'react'
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 const STATUS_OPTIONS = [
   'Pending',
@@ -35,6 +37,26 @@ export default function OrdersTable({
   const [selectedEditOrder, setSelectedEditOrder] = useState(null)
   const [editForm, setEditForm] = useState(null)
 
+  function showError(message) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Invalid data',
+      text: message,
+      confirmButtonColor: '#0d631b',
+    })
+  }
+
+  function showSuccess(message) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Saved',
+      text: message,
+      confirmButtonColor: '#0d631b',
+      timer: 1300,
+      showConfirmButton: false,
+    })
+  }
+
   function openNoteModal(order) {
     setSelectedNoteOrder(order)
     setDraftNote(order.note || '')
@@ -50,6 +72,7 @@ export default function OrdersTable({
 
     onNoteChange(selectedNoteOrder.id, draftNote)
     closeNoteModal()
+    showSuccess('Parcel note has been updated.')
   }
 
   function openEditModal(order) {
@@ -86,27 +109,32 @@ export default function OrdersTable({
     if (!selectedEditOrder || !editForm) return
 
     if (!editForm.date) {
-      alert('Please select order date.')
+      showError('Please select order date.')
       return
     }
 
     if (!editForm.customer.trim()) {
-      alert('Please enter customer name.')
+      showError('Please enter customer name.')
       return
     }
 
     if (!editForm.phone.trim()) {
-      alert('Please enter phone number.')
+      showError('Please enter phone number.')
       return
     }
 
     if (!editForm.address.trim()) {
-      alert('Please enter address.')
+      showError('Please enter address.')
+      return
+    }
+
+    if (!editForm.quantity || Number(editForm.quantity) < 1) {
+      showError('Please enter a valid quantity.')
       return
     }
 
     if (!editForm.amount || Number(editForm.amount) <= 0) {
-      alert('Please enter a valid amount.')
+      showError('Please enter a valid amount.')
       return
     }
 
@@ -124,6 +152,24 @@ export default function OrdersTable({
     })
 
     closeEditModal()
+    showSuccess('Order details have been updated.')
+  }
+
+  async function confirmDelete(order) {
+    const result = await Swal.fire({
+      icon: 'warning',
+      title: 'Delete order?',
+      html: `You are about to delete <b>#${order.id}</b>.<br/>This cannot be undone.`,
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete',
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: '#ba1a1a',
+      cancelButtonColor: '#707a6c',
+    })
+
+    if (!result.isConfirmed) return
+
+    onDelete(order.id)
   }
 
   return (
@@ -235,7 +281,7 @@ export default function OrdersTable({
 
                       <button
                         type="button"
-                        onClick={() => onDelete(order.id)}
+                        onClick={() => confirmDelete(order)}
                         className="rounded p-2 text-[#40493d] hover:bg-[#ba1a1a]/10 hover:text-[#ba1a1a]"
                         title="Delete order"
                       >

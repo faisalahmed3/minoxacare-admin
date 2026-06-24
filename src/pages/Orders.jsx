@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Download, Plus, RotateCcw, Save, X } from 'lucide-react'
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 import ordersSeed from '../data/orders.json'
 import OrderMetrics from '../components/OrderMetrics'
 import OrdersFilterBar from '../components/OrdersFilterBar'
@@ -67,8 +69,50 @@ export default function Orders() {
       .sort((a, b) => new Date(b.date) - new Date(a.date))
   }, [orders, search, status, product, date])
 
-  function handleDelete(id) {
+  function showError(message) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Missing information',
+      text: message,
+      confirmButtonColor: '#0d631b',
+    })
+  }
+
+  function showSuccess(message) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Done',
+      text: message,
+      confirmButtonColor: '#0d631b',
+      timer: 1600,
+      showConfirmButton: false,
+    })
+  }
+
+  async function handleDelete(id) {
+    const result = await Swal.fire({
+      icon: 'warning',
+      title: 'Delete this order?',
+      text: 'This action cannot be undone.',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete',
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: '#ba1a1a',
+      cancelButtonColor: '#707a6c',
+    })
+
+    if (!result.isConfirmed) return
+
     setOrders((prev) => prev.filter((order) => order.id !== id))
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Deleted',
+      text: 'The order has been deleted.',
+      confirmButtonColor: '#0d631b',
+      timer: 1400,
+      showConfirmButton: false,
+    })
   }
 
   function handleStatusChange(id, nextStatus) {
@@ -77,6 +121,15 @@ export default function Orders() {
         order.id === id ? { ...order, status: nextStatus } : order
       )
     )
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Status updated',
+      text: `Order status changed to ${nextStatus}.`,
+      confirmButtonColor: '#0d631b',
+      timer: 1200,
+      showConfirmButton: false,
+    })
   }
 
   function handleNoteChange(id, note) {
@@ -106,6 +159,15 @@ export default function Orders() {
     setStatus('All')
     setProduct('All')
     setDate('')
+
+    Swal.fire({
+      icon: 'info',
+      title: 'Filters reset',
+      text: 'All order filters have been cleared.',
+      confirmButtonColor: '#0d631b',
+      timer: 1200,
+      showConfirmButton: false,
+    })
   }
 
   function openCreateModal() {
@@ -132,32 +194,32 @@ export default function Orders() {
     event.preventDefault()
 
     if (!orderForm.date) {
-      alert('Please select order date.')
+      showError('Please select order date.')
       return
     }
 
     if (!orderForm.customer.trim()) {
-      alert('Please enter customer name.')
+      showError('Please enter customer name.')
       return
     }
 
     if (!orderForm.phone.trim()) {
-      alert('Please enter phone number.')
+      showError('Please enter phone number.')
       return
     }
 
     if (!orderForm.address.trim()) {
-      alert('Please enter address.')
+      showError('Please enter address.')
       return
     }
 
     if (!orderForm.quantity || Number(orderForm.quantity) < 1) {
-      alert('Please enter a valid quantity.')
+      showError('Please enter a valid quantity.')
       return
     }
 
     if (!orderForm.amount || Number(orderForm.amount) <= 0) {
-      alert('Please enter a valid amount.')
+      showError('Please enter a valid amount.')
       return
     }
 
@@ -179,6 +241,7 @@ export default function Orders() {
 
     setOrders((prev) => [newOrder, ...prev])
     closeCreateModal()
+    showSuccess(`Order #${generatedId} has been created.`)
   }
 
   function exportCSV() {
@@ -229,6 +292,15 @@ export default function Orders() {
     a.click()
 
     URL.revokeObjectURL(url)
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Exported',
+      text: 'Orders CSV has been downloaded.',
+      confirmButtonColor: '#0d631b',
+      timer: 1400,
+      showConfirmButton: false,
+    })
   }
 
   return (
