@@ -1,2 +1,19 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  background: #f4faff;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #bfcaba;
+  border-radius: 10px;
+}

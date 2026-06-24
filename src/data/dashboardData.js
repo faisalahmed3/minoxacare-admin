@@ -1,0 +1,65 @@
+export const kpiCards = [
+  {
+    title: 'Total Revenue',
+    value: '124,500.00',
+    icon: 'trending_up',
+    iconColor: 'text-[#0d631b]',
+    valueColor: 'text-[#0d631b]',
+    note: '12.5% vs last quarter',
+    noteColor: 'text-[#0d631b]',
+  },
+  {
+    title: 'Total Spend',
+    value: '82,470.00',
+    icon: 'payments',
+    iconColor: 'text-[#923357]',
+    note: 'May Spend: 30,470.00',
+    noteColor: 'text-[#923357]',
+  },
+  {
+    title: 'Total Withdraw',
+    value: '24,000.00',
+    icon: 'account_balance_wallet',
+    iconColor: 'text-[#004470]',
+    note: 'June statement value',
+    noteColor: 'text-[#40493d]/70',
+  },
+  {
+    title: 'Net Profit/Loss',
+    value: '+18,030.00',
+    icon: 'analytics',
+    iconColor: 'text-[#0d631b]',
+    valueColor: 'text-[#0d631b]',
+    badge: 'Healthy Margin',
+  },
+]
+
+export const monthlyData = [
+  {
+    month: 'April',
+    revenue: '38,200.00',
+    spend: '24,500.00',
+    withdrawals: '8,000.00',
+    net: '+5,700.00',
+    status: 'Stable',
+    statusType: 'success',
+  },
+  {
+    month: 'May',
+    revenue: '42,000.00',
+    spend: '30,470.00',
+    withdrawals: '10,500.00',
+    net: '+1,030.00',
+    status: 'Growth',
+    statusType: 'success',
+  },
+  {
+    month: 'June',
+    revenue: '44,300.00',
+    spend: '27,500.00',
+    withdrawals: '24,000.00',
+    net: '-7,200.00',
+    status: 'Negative Flow',
+    statusType: 'danger',
+  },
+]
