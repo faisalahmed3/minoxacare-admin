@@ -1,6 +1,23 @@
 import { Info, TrendingUp } from 'lucide-react'
 
-export default function OrderInsights() {
+export default function OrderInsights({ orders = [], filteredOrders = [] }) {
+  const paymentReceivedOrders = orders.filter(
+    (order) => order.status === 'Payment Received'
+  )
+
+  const paymentReceivedValue = paymentReceivedOrders.reduce(
+    (sum, order) => sum + Number(order.amount || 0),
+    0
+  )
+
+  const totalOrderValue = orders.reduce(
+    (sum, order) => sum + Number(order.amount || 0),
+    0
+  )
+
+  const averageOrder =
+    orders.length > 0 ? totalOrderValue / orders.length : 0
+
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
       <div className="flex gap-4 rounded-xl border border-[#bfcaba]/40 bg-[#dff1fb] p-6 lg:col-span-2">
@@ -9,23 +26,32 @@ export default function OrderInsights() {
         </div>
 
         <div>
-          <h4 className="text-lg font-semibold text-[#0d1e25]">Optimization Tip</h4>
+          <h4 className="text-lg font-semibold text-[#0d1e25]">
+            Order Data Insight
+          </h4>
 
           <p className="mt-2 leading-relaxed text-[#40493d]">
-            Your order processing time improved by <span className="font-bold text-[#0d631b]">18%</span> this month.
-            Using bulk delivery more consistently can reduce fulfillment costs for frequent customers.
+            Orders are filtered by exact calendar date and sorted newest first.
+            Product filter supports <b>Minoxidil</b>, <b>Derma Rollar</b>, and{' '}
+            <b>Minoxidil + Derma Rollar</b>. Showing{' '}
+            <b>{filteredOrders.length}</b> matching orders from{' '}
+            <b>{orders.length}</b> total records.
           </p>
         </div>
       </div>
 
-      <div className="cursor-pointer rounded-xl bg-[#2e7d32] p-6 text-[#cbffc2] shadow-lg transition-transform hover:scale-[1.02]">
-        <p className="text-xs font-bold uppercase tracking-wider opacity-80">Current Balance</p>
+      <div className="rounded-xl bg-[#2e7d32] p-6 text-[#cbffc2] shadow-lg">
+        <p className="text-xs font-bold uppercase tracking-wider opacity-80">
+          Payment Received Value
+        </p>
 
-        <h3 className="mt-2 text-3xl font-bold">$248,500.00</h3>
+        <h3 className="mt-2 text-3xl font-bold">
+          ৳{paymentReceivedValue.toLocaleString()}
+        </h3>
 
         <div className="mt-4 flex items-center gap-2 text-sm font-bold">
           <TrendingUp size={18} />
-          <span>Payout scheduled for tomorrow</span>
+          <span>Average order: ৳{averageOrder.toFixed(2)}</span>
         </div>
       </div>
     </div>
