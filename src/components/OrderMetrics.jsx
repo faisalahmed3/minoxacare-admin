@@ -15,7 +15,7 @@ export default function OrderMetrics({ orders }) {
   const notHandedOver = orders.filter((o) => o.status === 'Not Handed Over').length
   const paidOrders = orders.filter((o) => o.status === 'Payment Received').length
   const canceledOrders = orders.filter((o) => o.status === 'Canceled').length
-  const totalAmount = orders.reduce((sum, o) => sum + Number(o.amount), 0)
+  const totalAmount = orders.reduce((sum, o) => sum + Number(o.amount || 0), 0)
 
   const metrics = [
     {
@@ -62,7 +62,7 @@ export default function OrderMetrics({ orders }) {
     },
     {
       title: 'Total COD Value',
-      value: `$${totalAmount.toLocaleString()}`,
+      value: formatBDT(totalAmount),
       icon: Wallet,
       color: 'text-[#0d631b]',
       bg: 'bg-[#0d631b]/10',
@@ -90,4 +90,8 @@ export default function OrderMetrics({ orders }) {
       })}
     </div>
   )
+}
+
+function formatBDT(amount) {
+  return `৳${Number(amount || 0).toLocaleString('en-BD')}`
 }

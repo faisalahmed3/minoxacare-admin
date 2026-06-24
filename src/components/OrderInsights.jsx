@@ -15,8 +15,8 @@ export default function OrderInsights({ orders = [], filteredOrders = [] }) {
     0
   )
 
-  const averageOrder =
-    orders.length > 0 ? totalOrderValue / orders.length : 0
+  const averageOrder = orders.length > 0 ? totalOrderValue / orders.length : 0
+  const ordersWithNotes = orders.filter((order) => order.note?.trim()).length
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -35,7 +35,8 @@ export default function OrderInsights({ orders = [], filteredOrders = [] }) {
             Product filter supports <b>Minoxidil</b>, <b>Derma Rollar</b>, and{' '}
             <b>Minoxidil + Derma Rollar</b>. Showing{' '}
             <b>{filteredOrders.length}</b> matching orders from{' '}
-            <b>{orders.length}</b> total records.
+            <b>{orders.length}</b> total records. <b>{ordersWithNotes}</b>{' '}
+            orders currently have parcel notes.
           </p>
         </div>
       </div>
@@ -46,14 +47,18 @@ export default function OrderInsights({ orders = [], filteredOrders = [] }) {
         </p>
 
         <h3 className="mt-2 text-3xl font-bold">
-          ৳{paymentReceivedValue.toLocaleString()}
+          {formatBDT(paymentReceivedValue)}
         </h3>
 
         <div className="mt-4 flex items-center gap-2 text-sm font-bold">
           <TrendingUp size={18} />
-          <span>Average order: ৳{averageOrder.toFixed(2)}</span>
+          <span>Average order: {formatBDT(averageOrder)}</span>
         </div>
       </div>
     </div>
   )
+}
+
+function formatBDT(amount) {
+  return `৳${Number(amount || 0).toLocaleString('en-BD')}`
 }

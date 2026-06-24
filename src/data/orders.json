@@ -4,54 +4,64 @@
     "date": "2026-04-02",
     "customer": "Nrepen Mallik",
     "phone": "01700000001",
+    "address": "Mirpur 10, Dhaka",
     "product": "Minoxidil",
     "quantity": 2,
-    "amount": 124.5,
+    "amount": 1245,
     "status": "Payment Received",
-    "steadfastParcelId": "123456789"
+    "steadfastParcelId": "123456789",
+    "note": "Customer requested evening delivery."
   },
   {
     "id": "ORD-2604002",
     "date": "2026-04-04",
     "customer": "Harun Bahadur",
     "phone": "01700000002",
+    "address": "Agrabad, Chattogram",
     "product": "Derma Rollar",
     "quantity": 1,
-    "amount": 89,
+    "amount": 890,
     "status": "Pending",
-    "steadfastParcelId": "123456790"
+    "steadfastParcelId": "123456790",
+    "note": ""
   },
   {
     "id": "ORD-2605001",
     "date": "2026-05-06",
     "customer": "Deepak Pandey",
     "phone": "01700000003",
+    "address": "Banani, Dhaka",
     "product": "Minoxidil + Derma Rollar",
     "quantity": 3,
-    "amount": 186.75,
+    "amount": 1867,
     "status": "Complete",
-    "steadfastParcelId": "123456791"
+    "steadfastParcelId": "123456791",
+    "note": "Parcel delivered successfully."
   },
   {
     "id": "ORD-2605002",
     "date": "2026-05-10",
     "customer": "Srijana Shrestha",
     "phone": "01700000004",
+    "address": "Uttara Sector 7, Dhaka",
     "product": "Derma Rollar",
     "quantity": 1,
-    "amount": 45,
+    "amount": 450,
     "status": "Canceled",
-    "steadfastParcelId": "123456792"
+    "steadfastParcelId": "123456792",
+    "note": "Customer canceled before dispatch."
   },
   {
     "id": "ORD-2606001",
     "date": "2026-06-03",
     "customer": "Ankit Kumar",
     "phone": "01700000005",
+    "address": "Kotwali, Chattogram",
     "product": "Minoxidil",
     "quantity": 2,
-    "amount": 124.5,
+    "amount": 1245,
     "status": "Not Handed Over",
-    "steadfastParcelId": "123456793"
+    "steadfastParcelId": "123456793",
+    "note": ""
   }
 ]
